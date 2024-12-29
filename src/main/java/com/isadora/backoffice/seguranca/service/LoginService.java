@@ -1,10 +1,10 @@
 package com.isadora.backoffice.seguranca.service;
 
+import com.isadora.backoffice.seguranca.config.AuthenticationException;
 import com.isadora.backoffice.seguranca.model.entidades.Login;
 import com.isadora.backoffice.seguranca.model.repository.LoginRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.http.auth.AuthenticationException;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;

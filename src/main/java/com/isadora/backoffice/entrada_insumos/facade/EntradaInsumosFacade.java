@@ -85,7 +85,7 @@ public class EntradaInsumosFacade {
 
     private void buscarOuCriarEstoqueInsumo(List<EntradaInsumoItem> entradaInsumos) {
         entradaInsumos.forEach(entradaInsumoItem -> {
-            estoqueService.buscarOuCriarEstoqueInsumo(entradaInsumoItem.getInsumo(), entradaInsumoItem.getQuantidade(), entradaInsumoItem.getUnidadeMedidaEntrada(), entradaInsumoItem.getValidade(), entradaInsumoItem.getGrades(), entradaInsumoItem.getPrecoUnitario());
+            estoqueService.buscarOuCriarEstoqueInsumo(entradaInsumoItem.getInsumo(), entradaInsumoItem.getFabricante(), entradaInsumoItem.getQuantidade(), entradaInsumoItem.getUnidadeMedidaEntrada(), entradaInsumoItem.getValidade(), entradaInsumoItem.getGrades(), entradaInsumoItem.getPrecoUnitario());
         });
 
     }

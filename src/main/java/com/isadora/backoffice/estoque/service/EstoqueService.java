@@ -13,6 +13,7 @@ import com.isadora.backoffice.estoque.model.repositories.EstoqueRepository;
 import com.isadora.backoffice.estoque.model.specifications.EstoqueSpecifications;
 import com.isadora.backoffice.fabricacao.model.enums.UnidadeMedida;
 import com.isadora.backoffice.insumos.model.entidades.Insumo;
+import com.isadora.backoffice.pessoa.model.entidades.Fabricante;
 import com.isadora.backoffice.produto.model.Produto;
 import com.isadora.backoffice.produto.model.ProdutoAcabado;
 import com.isadora.backoffice.produto.model.ProdutoFinal;
@@ -84,13 +85,13 @@ public class EstoqueService {
     }
 
     @Transactional
-    public void buscarOuCriarEstoqueInsumo(Insumo insumo, BigDecimal quantidade, UnidadeMedida unidadeMedida, LocalDate validade, List<GradeCadastrada> grades, BigDecimal custoUnitario) {
+    public void buscarOuCriarEstoqueInsumo(Insumo insumo, Fabricante fabricante, BigDecimal quantidade, UnidadeMedida unidadeMedida, LocalDate validade, List<GradeCadastrada> grades, BigDecimal custoUnitario) {
         Optional<Estoque> optEstoque = estoqueRepository.findByInsumo_Id(insumo.getId());
         Estoque estoque = optEstoque.orElseGet(() -> {
             Estoque novoEstoque = criarEstoque(insumo, null, quantidade, unidadeMedida, validade, grades);
             return estoqueRepository.save(novoEstoque);
         });
-        loteEstoqueService.buscarOuCriarEstoqueInsumo(estoque, quantidade, unidadeMedida, validade, grades, custoUnitario);
+        loteEstoqueService.buscarOuCriarEstoqueInsumo(estoque, fabricante, quantidade, unidadeMedida, validade, grades, custoUnitario);
     }
 
     private Estoque criarEstoque(Insumo insumo, Produto produto, BigDecimal quantidade, UnidadeMedida unidadeMedida, LocalDate validade, List<GradeCadastrada> grades) {
@@ -112,7 +113,7 @@ public class EstoqueService {
     }
 
     private Estoque criarEstoque(Produto produto, BigDecimal quantidade, UnidadeMedida unidadeMedida, LocalDate validade, List<GradeCadastrada> grades) {
-        return (Estoque) criarEstoque(null, produto, quantidade, unidadeMedida, validade, grades);
+        return criarEstoque(null, produto, quantidade, unidadeMedida, validade, grades);
     }
 
     private static Estoque criarEstoque(Insumo insumo, Produto produto, BigDecimal quantidade, UnidadeMedida unidadeMedida, LocalDate validade, List<GradeCadastrada> grades, TipoEstoque tipoEstoque) {
@@ -125,10 +126,6 @@ public class EstoqueService {
         novoEstoque.setQuantidade(quantidade);
         novoEstoque.setValidade(validade);
         return novoEstoque;
-    }
-
-    private static Estoque criarEstoque(Produto produto, BigDecimal quantidade, UnidadeMedida unidadeMedida, LocalDate validade, List<GradeCadastrada> grades, TipoEstoque tipoEstoque) {
-        return criarEstoque(null, produto, quantidade, unidadeMedida, validade, grades, tipoEstoque);
     }
 
     /**
