@@ -8,7 +8,6 @@ import com.isadora.backoffice.estoque.model.repositories.LoteEstoqueRepository;
 import com.isadora.backoffice.estoque.model.repositories.MovimentacaoEstoqueRepository;
 import com.isadora.backoffice.estoque.model.specifications.MovimentacaoEstoqueSpecifications;
 import com.isadora.backoffice.fabricacao.model.enums.UnidadeMedida;
-import com.isadora.backoffice.pessoa.model.entidades.Fabricante;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;

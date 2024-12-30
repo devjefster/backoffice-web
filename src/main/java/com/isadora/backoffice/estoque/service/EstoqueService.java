@@ -13,7 +13,6 @@ import com.isadora.backoffice.estoque.model.repositories.EstoqueRepository;
 import com.isadora.backoffice.estoque.model.specifications.EstoqueSpecifications;
 import com.isadora.backoffice.fabricacao.model.enums.UnidadeMedida;
 import com.isadora.backoffice.insumos.model.entidades.Insumo;
-import com.isadora.backoffice.pessoa.model.entidades.Fabricante;
 import com.isadora.backoffice.produto.model.Produto;
 import com.isadora.backoffice.produto.model.ProdutoAcabado;
 import com.isadora.backoffice.produto.model.ProdutoFinal;

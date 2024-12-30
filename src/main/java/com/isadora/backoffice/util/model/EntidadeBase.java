@@ -13,7 +13,7 @@ import java.time.Instant;
 @Getter
 @Setter
 @MappedSuperclass
-    public class EntidadeBase {
+public class EntidadeBase {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -26,4 +26,17 @@ import java.time.Instant;
     @Version
     @UpdateTimestamp
     private Instant updatedAt;
+
+    @PrePersist
+    public void onInsert() {
+        if (createdAt == null) {
+            createdAt = Instant.now();
+        }
+        updatedAt = createdAt;
+    }
+
+    @PreUpdate
+    public void onUpdate() {
+        updatedAt = Instant.now();
+    }
 }

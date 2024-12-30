@@ -10,9 +10,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/fabricantes")
+@RequestMapping("/api/clientes")
 @RequiredArgsConstructor
-public class FabricanteController {
+public class ClienteController {
 
     private final PessoaFacade facade;
 

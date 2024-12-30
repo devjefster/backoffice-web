@@ -1,5 +1,7 @@
 package com.isadora.backoffice.util.model;
 
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -17,6 +19,9 @@ public interface BaseMapper<ENTIDADE, DTO> {
     List<ENTIDADE> toEntity(List<DTO> D);
 
     List<DTO> toDto(List<ENTIDADE> E);
+
+    @Mapping(target = "id",  ignore = true)
+    void update(@MappingTarget ENTIDADE entity, DTO dto);
 
 
     default PagedModel<DTO> toDto(Page<ENTIDADE> entities) {

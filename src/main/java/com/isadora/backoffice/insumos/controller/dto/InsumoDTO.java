@@ -1,7 +1,5 @@
 package com.isadora.backoffice.insumos.controller.dto;
 
-import com.isadora.backoffice.pessoa.controller.dto.FabricanteDTO;
-import com.isadora.backoffice.pessoa.controller.dto.FornecedorDTO;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

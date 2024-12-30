@@ -3,7 +3,6 @@ package com.isadora.backoffice.entrada_insumos.model.entidades;
 import com.isadora.backoffice.estoque.model.entidades.GradeCadastrada;
 import com.isadora.backoffice.fabricacao.model.enums.UnidadeMedida;
 import com.isadora.backoffice.insumos.model.entidades.Insumo;
-import com.isadora.backoffice.pessoa.model.entidades.Fabricante;
 import com.isadora.backoffice.util.model.EntidadeBase;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;

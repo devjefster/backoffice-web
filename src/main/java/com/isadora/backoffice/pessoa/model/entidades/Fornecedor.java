@@ -16,7 +16,7 @@ import java.util.List;
 public class Fornecedor extends Pessoa {
 
 
-    @ManyToMany(mappedBy = "fornecedores")
+    @ManyToMany(mappedBy = "pessoa")
     private List<Insumo> insumos;
 
 }

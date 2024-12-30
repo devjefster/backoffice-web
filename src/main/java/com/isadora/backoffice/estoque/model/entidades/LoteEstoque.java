@@ -22,7 +22,7 @@ import java.util.List;
 public class LoteEstoque extends SoftDeleteEntidadeBase {
 
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "estoque_id", nullable = false)
     private Estoque estoque;
 

@@ -1,6 +1,5 @@
 package com.isadora.backoffice.entrada_insumos.controller.dto;
 
-import com.isadora.backoffice.pessoa.controller.dto.FornecedorDTO;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;

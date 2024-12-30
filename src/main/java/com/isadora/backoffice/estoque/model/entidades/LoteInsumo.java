@@ -1,6 +1,5 @@
 package com.isadora.backoffice.estoque.model.entidades;
 
-import com.isadora.backoffice.pessoa.model.entidades.Fabricante;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
