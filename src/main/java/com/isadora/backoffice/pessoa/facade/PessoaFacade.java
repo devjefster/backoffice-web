@@ -35,20 +35,22 @@ public class PessoaFacade {
     @Transactional
     public PessoaDTO criar(PessoaDTO dto) {
         validarPessoa(dto);
-        List<Endereco> enderecos = enderecoService.criarOuAtualizarEnderecos(dto.getEnderecos());
         Pessoa pessoa = mapper.toEntity(dto);
+        pessoaService.salvar(pessoa);
+        List<Endereco> enderecos = enderecoService.criarOuAtualizarEnderecos(dto.getEnderecos(),pessoa);
         pessoa.setEnderecos(enderecos);
-        return mapper.toDto(pessoaService.salvar(pessoa));
+        return mapper.toDto(pessoa);
     }
 
     @Transactional
     public PessoaDTO atualizar(Long id, PessoaDTO dto) {
         validarPessoa(dto);
         Pessoa pessoa = pessoaService.buscarPeloId(id);
-        List<Endereco> enderecos = enderecoService.criarOuAtualizarEnderecos(dto.getEnderecos());
+        pessoaService.salvar(pessoa);
+        List<Endereco> enderecos = enderecoService.criarOuAtualizarEnderecos(dto.getEnderecos(),pessoa);
         mapper.update(pessoa, dto);
         pessoa.setEnderecos(enderecos);
-        return mapper.toDto(pessoaService.salvar(pessoa));
+        return mapper.toDto(pessoa);
     }
 
     public void deletar(Long id) {

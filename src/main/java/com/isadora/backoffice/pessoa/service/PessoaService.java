@@ -27,6 +27,7 @@ public class PessoaService {
     }
 
     public Pessoa salvar(Pessoa pessoa) {
+        pessoa.getEnderecos().forEach(endereco -> endereco.setPessoa(pessoa));
         return repository.save(pessoa);
     }
 
