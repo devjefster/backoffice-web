@@ -61,7 +61,7 @@ public class PessoaFacade {
     private void validarPessoa(PessoaDTO dto) {
         if (dto.getTipo() == TipoCadastro.FABRICANTE) {
             if (dto.getNome() == null || dto.getNomeFantasia() == null || dto.getRazaoSocial() == null) {
-                throw new ValidationException("Nome é obritório para Fabricante", "cpf");
+                throw new ValidationException("Nome é obritório para Pessoa", "cpf");
             }
         } else {
             if (dto.getTipoPessoa().equals(TipoPessoa.PESSOA_FISICA)) {

@@ -1,5 +1,6 @@
 package com.isadora.backoffice.entrada_insumos.controller.dto;
 
+import com.isadora.backoffice.pessoa.controller.dto.PessoaDTO;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,7 +16,7 @@ import java.util.List;
 public class EntradaInsumosDTO {
     private Long id;
     @NotNull
-    private FornecedorDTO fornecedor;
+    private PessoaDTO fornecedor;
 
     private LocalDate dataEntrada = LocalDate.now();
     private BigDecimal custoFrete = BigDecimal.ZERO;

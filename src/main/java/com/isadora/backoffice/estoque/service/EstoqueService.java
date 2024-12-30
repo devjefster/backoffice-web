@@ -13,6 +13,7 @@ import com.isadora.backoffice.estoque.model.repositories.EstoqueRepository;
 import com.isadora.backoffice.estoque.model.specifications.EstoqueSpecifications;
 import com.isadora.backoffice.fabricacao.model.enums.UnidadeMedida;
 import com.isadora.backoffice.insumos.model.entidades.Insumo;
+import com.isadora.backoffice.pessoa.model.entidades.Pessoa;
 import com.isadora.backoffice.produto.model.Produto;
 import com.isadora.backoffice.produto.model.ProdutoAcabado;
 import com.isadora.backoffice.produto.model.ProdutoFinal;
@@ -84,7 +85,7 @@ public class EstoqueService {
     }
 
     @Transactional
-    public void buscarOuCriarEstoqueInsumo(Insumo insumo, Fabricante fabricante, BigDecimal quantidade, UnidadeMedida unidadeMedida, LocalDate validade, List<GradeCadastrada> grades, BigDecimal custoUnitario) {
+    public void buscarOuCriarEstoqueInsumo(Insumo insumo, Pessoa fabricante, BigDecimal quantidade, UnidadeMedida unidadeMedida, LocalDate validade, List<GradeCadastrada> grades, BigDecimal custoUnitario) {
         Optional<Estoque> optEstoque = estoqueRepository.findByInsumo_Id(insumo.getId());
         Estoque estoque = optEstoque.orElseGet(() -> {
             Estoque novoEstoque = criarEstoque(insumo, null, quantidade, unidadeMedida, validade, grades);

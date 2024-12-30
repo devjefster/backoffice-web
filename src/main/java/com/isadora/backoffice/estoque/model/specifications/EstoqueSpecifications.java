@@ -26,7 +26,7 @@ public class EstoqueSpecifications {
         };
     }
 
-    public static Specification<Estoque> porFabricante(Long fabricanteId) {
+    public static Specification<Estoque> porPessoa(Long fabricanteId) {
         return (root, query, criteriaBuilder) -> {
             if (fabricanteId != null) {
                 return criteriaBuilder.equal(root.get("fabricante").get("id"), fabricanteId);

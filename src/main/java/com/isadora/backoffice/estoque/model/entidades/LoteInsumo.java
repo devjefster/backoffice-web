@@ -1,5 +1,6 @@
 package com.isadora.backoffice.estoque.model.entidades;
 
+import com.isadora.backoffice.pessoa.model.entidades.Pessoa;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,7 +20,7 @@ public class LoteInsumo extends LoteEstoque {
 
     @ManyToOne
     @JoinColumn(name = "fabricante_id", nullable = false)
-    private Fabricante fabricante;
+    private Pessoa fabricante;
 
     @Column(nullable = false, updatable = false)
     private LocalDate dataEntrada;

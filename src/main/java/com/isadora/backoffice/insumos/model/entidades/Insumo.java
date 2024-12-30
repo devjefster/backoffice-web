@@ -2,7 +2,7 @@ package com.isadora.backoffice.insumos.model.entidades;
 
 import com.isadora.backoffice.estoque.model.entidades.GradeCadastrada;
 import com.isadora.backoffice.fabricacao.model.enums.UnidadeMedida;
-import com.isadora.backoffice.pessoa.model.entidades.Fornecedor;
+import com.isadora.backoffice.pessoa.model.entidades.Pessoa;
 import com.isadora.backoffice.util.model.EntidadeBase;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -40,14 +40,14 @@ public class Insumo extends EntidadeBase {
             name = "insumo_fabricante",
             joinColumns = @JoinColumn(name = "insumo_id"),
             inverseJoinColumns = @JoinColumn(name = "fabricante_id"))
-    private List<Fabricante> fabricantes;
+    private List<Pessoa> fabricantes;
 
     @ManyToMany
     @JoinTable(
             name = "insumo_fornecedor",
             joinColumns = @JoinColumn(name = "insumo_id"),
             inverseJoinColumns = @JoinColumn(name = "fornecedor_id"))
-    private List<Fornecedor> fornecedores;
+    private List<Pessoa> fornecedores;
 
 
     @ManyToMany

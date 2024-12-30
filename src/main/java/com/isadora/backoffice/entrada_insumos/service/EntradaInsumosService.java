@@ -51,13 +51,19 @@ public class EntradaInsumosService {
             } else {
                 log.info("Insumo do tipo {} não atualiza o estoque.", item.getInsumo().getClass().getSimpleName());
             }
+            item.calcularCustoTotal();
         });
 
         entrada.getItens().forEach(item -> item.setEntradaInsumos(entrada));
-        EntradaInsumos saved = repository.save(entrada);
+        EntradaInsumos saved = salvar(entrada);
         log.info("Entrada criada com ID: {}", saved.getId());
 
         return saved;
+    }
+
+    private EntradaInsumos salvar(EntradaInsumos entrada) {
+        entrada.calcularCusto();
+        return repository.save(entrada);
     }
 
 
@@ -110,7 +116,7 @@ public class EntradaInsumosService {
         entrada.setCustoFrete(entradaAtualizada.getCustoFrete());
         entrada.setCustoOutros(entradaAtualizada.getCustoOutros());
         entrada.setItens(entradaAtualizada.getItens());
-        repository.save(entrada);
+        salvar(entrada);
     }
 
     public void deletarEntrada(Long id) {

@@ -1,5 +1,6 @@
 package com.isadora.backoffice.insumos.controller.dto;
 
+import com.isadora.backoffice.pessoa.controller.dto.PessoaDTO;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,8 +13,8 @@ public class InsumoDTO {
     private String nome;
     private String descricao;
     private String tipoInsumo;
-    private List<FabricanteDTO> fabricantes;
-    private List<FornecedorDTO> fornecedores;
+    private List<PessoaDTO> fabricantes;
+    private List<PessoaDTO> fornecedores;
     private List<GradeCadastradaDTO> grades;
 }
 

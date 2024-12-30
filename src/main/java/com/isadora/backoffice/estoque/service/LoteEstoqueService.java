@@ -8,6 +8,7 @@ import com.isadora.backoffice.estoque.model.repositories.LoteEstoqueRepository;
 import com.isadora.backoffice.estoque.model.repositories.MovimentacaoEstoqueRepository;
 import com.isadora.backoffice.estoque.model.specifications.MovimentacaoEstoqueSpecifications;
 import com.isadora.backoffice.fabricacao.model.enums.UnidadeMedida;
+import com.isadora.backoffice.pessoa.model.entidades.Pessoa;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -62,7 +63,7 @@ public class LoteEstoqueService {
     }
 
     @Transactional
-    public void buscarOuCriarEstoqueInsumo(Estoque estoque, Fabricante fabricante, BigDecimal quantidade, UnidadeMedida unidadeMedida, LocalDate validade, List<GradeCadastrada> grades, BigDecimal custoUnitario) {
+    public void buscarOuCriarEstoqueInsumo(Estoque estoque, Pessoa fabricante, BigDecimal quantidade, UnidadeMedida unidadeMedida, LocalDate validade, List<GradeCadastrada> grades, BigDecimal custoUnitario) {
         LoteInsumo lote = new LoteInsumo();
         List<LoteInsumo> loteEstoques = estoque.getLotes().stream()
                 .filter(loteEstoque -> loteEstoque instanceof LoteInsumo)
@@ -98,7 +99,7 @@ public class LoteEstoqueService {
         loteEstoqueRepository.save(lote);
     }
 
-    private LoteInsumo criarLote(Estoque estoque, Fabricante fabricante, BigDecimal quantidade, UnidadeMedida unidadeMedida, LocalDate validade, List<GradeCadastrada> grades, BigDecimal custoUnitario) {
+    private LoteInsumo criarLote(Estoque estoque, Pessoa fabricante, BigDecimal quantidade, UnidadeMedida unidadeMedida, LocalDate validade, List<GradeCadastrada> grades, BigDecimal custoUnitario) {
         LoteInsumo lote = new LoteInsumo();
         lote.setEstoque(estoque);
         lote.setFabricante(fabricante);

@@ -1,6 +1,7 @@
 package com.isadora.backoffice.entrada_insumos.controller.dto;
 
 import com.isadora.backoffice.insumos.controller.dto.InsumoDTO;
+import com.isadora.backoffice.pessoa.controller.dto.PessoaDTO;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,7 +18,7 @@ public class EntradaInsumoItemDTO {
 
     @NotNull
     private InsumoDTO insumo;
-    private FabricanteDTO fabricante;
+    private PessoaDTO fabricante;
     @NotNull
     private BigDecimal quantidade;
     @NotNull

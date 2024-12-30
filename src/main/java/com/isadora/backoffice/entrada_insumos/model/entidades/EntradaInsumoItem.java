@@ -3,6 +3,7 @@ package com.isadora.backoffice.entrada_insumos.model.entidades;
 import com.isadora.backoffice.estoque.model.entidades.GradeCadastrada;
 import com.isadora.backoffice.fabricacao.model.enums.UnidadeMedida;
 import com.isadora.backoffice.insumos.model.entidades.Insumo;
+import com.isadora.backoffice.pessoa.model.entidades.Pessoa;
 import com.isadora.backoffice.util.model.EntidadeBase;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -42,7 +43,7 @@ public class EntradaInsumoItem extends EntidadeBase {
 
     @ManyToOne
     @JoinColumn(name = "fabricante_id", nullable = false)
-    private Fabricante fabricante;
+    private Pessoa fabricante;
 
     @Column(nullable = false)
     private BigDecimal quantidade; // Quantidade do insumo na unidade de entrada.
@@ -70,7 +71,6 @@ public class EntradaInsumoItem extends EntidadeBase {
             inverseJoinColumns = @JoinColumn(name = "grade_id"))
     private List<GradeCadastrada> grades;
 
-    @PrePersist
     public void calcularCustoTotal() {
         this.custoTotal = precoUnitario.multiply(quantidade);
     }

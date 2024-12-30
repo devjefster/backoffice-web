@@ -16,7 +16,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public abstract class Pessoa extends SoftDeleteEntidadeBase {
+public class Pessoa extends SoftDeleteEntidadeBase {
     private String nome;
     private String razaoSocial;
     private String nomeFantasia;

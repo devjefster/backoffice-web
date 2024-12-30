@@ -1,14 +1,8 @@
 package com.isadora.backoffice.entrada_insumos.model.entidades;
 
-import com.isadora.backoffice.pessoa.model.entidades.Fornecedor;
+import com.isadora.backoffice.pessoa.model.entidades.Pessoa;
 import com.isadora.backoffice.util.model.EntidadeBase;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Transient;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -25,10 +19,9 @@ import java.util.List;
 @AllArgsConstructor
 public class EntradaInsumos extends EntidadeBase {
 
-
     @ManyToOne
     @JoinColumn(name = "fornecedor_id", nullable = false)
-    private Fornecedor fornecedor;
+    private Pessoa fornecedor;
 
     @Column(nullable = false)
     private LocalDate dataEntrada;
@@ -42,9 +35,11 @@ public class EntradaInsumos extends EntidadeBase {
     @OneToMany(mappedBy = "entradaInsumos", cascade = CascadeType.ALL)
     private List<EntradaInsumoItem> itens; // Itens da entrada.
 
-    @Transient
-    public BigDecimal getCustoTotal() {
-        return itens.stream()
+    @Column(nullable = false)
+    private BigDecimal custoTotal;
+
+    public void calcularCusto() {
+        custoTotal = itens.stream()
                 .map(EntradaInsumoItem::getCustoTotal)
                 .reduce(BigDecimal.ZERO, BigDecimal::add)
                 .add(custoFrete)
