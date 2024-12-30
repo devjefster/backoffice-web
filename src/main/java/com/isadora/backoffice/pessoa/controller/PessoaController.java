@@ -7,12 +7,15 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PagedModel;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
-@RequestMapping("/api/fabricantes")
+@RequestMapping("/api/pessoa")
 @RequiredArgsConstructor
-public class FabricanteController {
+public class PessoaController {
 
     private final PessoaFacade facade;
 
@@ -41,6 +44,11 @@ public class FabricanteController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deletarEndereco(@PathVariable Long enderecoId) {
         facade.deletarEndereco(enderecoId);
+    }
+
+    @PostMapping("/validar-unicidade")
+    public ResponseEntity<Map<String, String>> validarUnicidade(@RequestBody PessoaDTO pessoa) {
+        return ResponseEntity.ok(facade.validarUnicidade(pessoa));
     }
 }
 

@@ -21,6 +21,7 @@ public class Pessoa extends SoftDeleteEntidadeBase {
     private String razaoSocial;
     private String nomeFantasia;
     private String email;
+    private String inscricaoEstadual;
     private String telefone;
     private TipoCadastro tipo;
     private TipoPessoa tipoPessoa;

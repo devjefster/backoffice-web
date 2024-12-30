@@ -33,4 +33,12 @@ public class PessoaService {
     public void deletar(Long id) {
         repository.deleteById(id);
     }
+
+    public boolean existeCpfCnpj(String cpfCnpj) {
+        return repository.existsPessoaByCpfCnpj(cpfCnpj);
+    }
+
+    public boolean existeEmail(String email) {
+        return repository.existsPessoaByEmail(email);
+    }
 }

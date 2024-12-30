@@ -16,7 +16,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PagedModel;
 import org.springframework.stereotype.Component;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Component
 @RequiredArgsConstructor
@@ -83,6 +85,15 @@ public class PessoaFacade {
         }
     }
 
-    public void deletarContato(Long contatoId) {
+    public Map<String, String> validarUnicidade(PessoaDTO pessoa) {
+        Map<String, String> erros = new HashMap<>();
+        if (pessoaService.existeCpfCnpj(pessoa.getCpfCnpj())) {
+            erros.put("cpfCnpj", "CPF/CNPJ já cadastrado.");
+        }
+        if (pessoaService.existeEmail(pessoa.getEmail())) {
+            erros.put("email", "E-mail já cadastrado.");
+        }
+
+        return  erros.isEmpty() ? Map.of("unico", "true") : erros;
     }
 }

@@ -8,4 +8,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PessoaRepository extends JpaRepository<Pessoa, Long>, JpaSpecificationExecutor<Pessoa> {
+    boolean existsPessoaByCpfCnpj(String cpfCnpj);
+
+    boolean existsPessoaByEmail(String email);
 }

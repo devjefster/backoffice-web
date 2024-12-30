@@ -47,7 +47,7 @@ public class Insumo extends EntidadeBase {
             name = "insumo_fornecedor",
             joinColumns = @JoinColumn(name = "insumo_id"),
             inverseJoinColumns = @JoinColumn(name = "fornecedor_id"))
-    private List<Pessoa> fornecedores;
+    private List<Pessoa> fornecedFores;
 
 
     @ManyToMany

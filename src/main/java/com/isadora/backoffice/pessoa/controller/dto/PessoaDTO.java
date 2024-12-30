@@ -9,7 +9,7 @@ import java.util.List;
 
 @Data
 public class PessoaDTO {
-    private String id;
+    private Long id;
     private String nomeFantasia;
     private String razaoSocial;
     private String nome;
