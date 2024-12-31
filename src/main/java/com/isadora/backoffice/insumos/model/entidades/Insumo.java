@@ -2,6 +2,10 @@ package com.isadora.backoffice.insumos.model.entidades;
 
 import com.isadora.backoffice.estoque.model.entidades.GradeCadastrada;
 import com.isadora.backoffice.fabricacao.model.enums.UnidadeMedida;
+import com.isadora.backoffice.insumos.model.enums.EmbalagensEnum;
+import com.isadora.backoffice.insumos.model.enums.ItensConsumiveisEnum;
+import com.isadora.backoffice.insumos.model.enums.TipoInsumo;
+import com.isadora.backoffice.insumos.model.enums.TipoMateriaPrima;
 import com.isadora.backoffice.pessoa.model.entidades.Pessoa;
 import com.isadora.backoffice.util.model.EntidadeBase;
 import jakarta.persistence.*;
@@ -13,7 +17,6 @@ import java.util.List;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "tipo_insumo", discriminatorType = DiscriminatorType.STRING)
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
@@ -34,6 +37,32 @@ public class Insumo extends EntidadeBase {
     @Column(nullable = false)
     private UnidadeMedida unidadeMedida;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private TipoInsumo tipo;
+
+    @Enumerated(EnumType.STRING)
+    private TipoMateriaPrima tipoMateriaPrima;
+
+    @Enumerated(EnumType.STRING)
+    private ItensConsumiveisEnum tipoConsumivel;
+
+    @Enumerated(EnumType.STRING)
+    private EmbalagensEnum tipoEmbalagem;
+
+    @Column
+    private String especificacoesTecnicas;
+
+
+    @Column
+    private String aplicacao;
+
+
+    @Column
+    private String dimensoes; // Exemplo: 10x15x20 cm.
+
+    @Column
+    private String material;
 
     @ManyToMany
     @JoinTable(

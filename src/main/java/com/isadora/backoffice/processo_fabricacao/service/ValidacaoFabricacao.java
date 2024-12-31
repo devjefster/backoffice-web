@@ -2,7 +2,7 @@ package com.isadora.backoffice.processo_fabricacao.service;
 
 import com.isadora.backoffice.fabricacao.model.enums.UnidadeMedida;
 import com.isadora.backoffice.insumos.model.entidades.Insumo;
-import com.isadora.backoffice.insumos.model.entidades.MateriaPrima;
+import com.isadora.backoffice.insumos.model.enums.TipoInsumo;
 import com.isadora.backoffice.processo_fabricacao.model.entidades.ProcessoFabricacao;
 import org.springframework.stereotype.Component;
 
@@ -23,7 +23,7 @@ public class ValidacaoFabricacao {
 
     public void validarPorcentagens(List<ProcessoFabricacao> processos) {
         double somaPorcentagens = processos.stream()
-                .filter(processo -> processo.getInsumo() instanceof MateriaPrima)
+                .filter(processo -> processo.getInsumo().getTipo().equals(TipoInsumo.MATERIA_PRIMA))
                 .mapToDouble(ProcessoFabricacao::getPorcentagem)
                 .sum();
 

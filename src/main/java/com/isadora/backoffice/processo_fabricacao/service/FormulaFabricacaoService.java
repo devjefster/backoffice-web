@@ -1,7 +1,7 @@
 package com.isadora.backoffice.processo_fabricacao.service;
 
 import com.isadora.backoffice.fabricacao.model.repositories.FormulaFabricacaoRepository;
-import com.isadora.backoffice.insumos.model.entidades.MateriaPrima;
+import com.isadora.backoffice.insumos.model.enums.TipoInsumo;
 import com.isadora.backoffice.processo_fabricacao.model.entidades.FormulaFabricacao;
 import com.isadora.backoffice.processo_fabricacao.model.entidades.ProcessoFabricacao;
 import jakarta.persistence.EntityNotFoundException;
@@ -39,7 +39,7 @@ public class FormulaFabricacaoService {
 
     private void validarPorcentagens(List<ProcessoFabricacao> processos) {
         double somaPorcentagens = processos.stream()
-                .filter(processo -> processo.getInsumo() instanceof MateriaPrima)
+                .filter(processo -> processo.getInsumo().getTipo().equals(TipoInsumo.MATERIA_PRIMA))
                 .mapToDouble(ProcessoFabricacao::getPorcentagem)
                 .sum();
 

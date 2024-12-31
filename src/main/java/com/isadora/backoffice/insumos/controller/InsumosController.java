@@ -74,8 +74,8 @@ public class InsumosController {
         return
                 Arrays.stream(TipoInsumo.values())
                         .map(enumValue -> Map.of(
-                                "name", enumValue.name(),
-                                "descricao", enumValue.getDescricao()
+                                "chave", enumValue.name(),
+                                "valor", enumValue.getDescricao()
                         ))
                         .toList();
 
@@ -87,8 +87,8 @@ public class InsumosController {
         return
                 Arrays.stream(UnidadeMedida.values())
                         .map(enumValue -> Map.of(
-                                "name", enumValue.name(),
-                                "descricao", enumValue.getDescricao()
+                                "chave", enumValue.name(),
+                                "valor", enumValue.getDescricao()
                         ))
                         .toList();
 
@@ -104,8 +104,8 @@ public class InsumosController {
             return ResponseEntity.ok(
                     Arrays.stream(subTipoClass.getEnumConstants())
                             .map(enumValue -> Map.of(
-                                    "name", enumValue.toString(),
-                                    "descricao", enumValue.getDescricacao()
+                                    "chave", enumValue.toString(),
+                                    "valor", enumValue.getDescricacao()
                             ))
                             .toList()
             );

@@ -16,5 +16,12 @@ public class InsumoDTO {
     private List<PessoaDTO> fabricantes;
     private List<PessoaDTO> fornecedores;
     private List<GradeCadastradaDTO> grades;
+    private String tipoConsumivel; // Enum: PAVIO, VARETAS, etc.
+    private String aplicacao;
+    private String tipoEmbalagem; // Enum: FRASCO_VIDRO, CAIXA, etc.
+    private String dimensoes;
+    private String material;
+    private String tipoMateriaPrima; // Enum: ESSENCIA, ALCOOL, etc.
+    private String especificacoesTecnicas;
 }
 
