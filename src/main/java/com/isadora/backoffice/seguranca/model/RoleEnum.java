@@ -9,7 +9,7 @@ public enum RoleEnum implements GrantedAuthority {
 
     private String nome;
 
-    private RoleEnum(String nome) {
+    RoleEnum(String nome) {
     }
 
     @Override
