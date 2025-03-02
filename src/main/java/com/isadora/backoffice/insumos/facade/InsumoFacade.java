@@ -1,10 +1,11 @@
 package com.isadora.backoffice.insumos.facade;
 
 import com.isadora.backoffice.insumos.controller.dto.InsumoDTO;
-import com.isadora.backoffice.insumos.model.enums.TipoInsumo;
-import com.isadora.backoffice.insumos.service.InsumoService;
 import com.isadora.backoffice.insumos.model.entidades.Insumo;
+import com.isadora.backoffice.insumos.model.enums.TipoInsumo;
 import com.isadora.backoffice.insumos.model.mapper.InsumoMapper;
+import com.isadora.backoffice.insumos.service.InsumoService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,6 +19,7 @@ public class InsumoFacade {
     private final InsumoService insumoService;
 
 
+    @Transactional
     public InsumoDTO criar(InsumoDTO dto) {
         Insumo insumo = insumoMapper.toEntity(dto);
         Insumo created = insumoService.criar(insumo);

@@ -1,5 +1,8 @@
 package com.isadora.backoffice.fabricacao.model.enums;
 
+import lombok.Getter;
+
+@Getter
 public enum UnidadeMedida {
     LITRO("Litro", "L"),
     MILILITRO("Mililitro", "ml"),
@@ -17,12 +20,5 @@ public enum UnidadeMedida {
         this.simbolo = simbolo;
     }
 
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public String getSimbolo() {
-        return simbolo;
-    }
 }
 

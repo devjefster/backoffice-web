@@ -1,24 +1,27 @@
 package com.isadora.backoffice.util.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
+import jakarta.persistence.Version;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.Instant;
 
-@NoArgsConstructor
 @Getter
 @Setter
 @MappedSuperclass
-public class EntidadeBase {
+public abstract class EntidadeBase {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
 
     @CreationTimestamp
     private Instant createdAt;
@@ -27,13 +30,19 @@ public class EntidadeBase {
     @UpdateTimestamp
     private Instant updatedAt;
 
+    public EntidadeBase() {
+        this.createdAt = Instant.now();
+        this.updatedAt = Instant.now();
+    }
+
+
     @PrePersist
     public void onInsert() {
         if (createdAt == null) {
             createdAt = Instant.now();
         }
-        updatedAt = createdAt;
     }
+
 
     @PreUpdate
     public void onUpdate() {

@@ -7,7 +7,6 @@ import com.isadora.backoffice.insumos.model.specifications.InsumoSpecifications;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -29,14 +28,32 @@ public class InsumoService {
     }
 
     public Insumo criar(Insumo insumo) {
+        insumo.setId(null);
         return repository.save(insumo);
     }
 
     public Insumo atualizar(Long id, Insumo insumoAtualizado) {
-        Insumo insumo = buscarPeloId(id);
-        BeanUtils.copyProperties(insumo, insumoAtualizado, "id");
-        return repository.save(insumoAtualizado);
+        Insumo insumo = repository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Insumo não encontrado com id " + id));
+
+        // Atualiza os campos necessários, sem sobrescrever timestamps ou versão
+        insumo.setNome(insumoAtualizado.getNome());
+        insumo.setDescricao(insumoAtualizado.getDescricao());
+        insumo.setCodigoBarras(insumoAtualizado.getCodigoBarras());
+        insumo.setQrCode(insumoAtualizado.getQrCode());
+        insumo.setUnidadeMedida(insumoAtualizado.getUnidadeMedida());
+        insumo.setTipo(insumoAtualizado.getTipo());
+        insumo.setTipoMateriaPrima(insumoAtualizado.getTipoMateriaPrima());
+        insumo.setTipoConsumivel(insumoAtualizado.getTipoConsumivel());
+        insumo.setTipoEmbalagem(insumoAtualizado.getTipoEmbalagem());
+        insumo.setEspecificacoesTecnicas(insumoAtualizado.getEspecificacoesTecnicas());
+        insumo.setAplicacao(insumoAtualizado.getAplicacao());
+        insumo.setDimensoes(insumoAtualizado.getDimensoes());
+        insumo.setMaterial(insumoAtualizado.getMaterial());
+
+        return repository.save(insumo);
     }
+
 
     public void deletar(Long id) {
         repository.deleteById(id);
