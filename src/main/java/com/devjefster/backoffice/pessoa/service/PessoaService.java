@@ -2,6 +2,7 @@ package com.devjefster.backoffice.pessoa.service;
 
 import com.devjefster.backoffice.pessoa.controller.dto.FiltrosPessoaDTO;
 import com.devjefster.backoffice.pessoa.model.entidades.Pessoa;
+import com.devjefster.backoffice.pessoa.model.enums.TipoCadastro;
 import com.devjefster.backoffice.pessoa.model.repositories.PessoaRepository;
 import com.devjefster.backoffice.pessoa.model.specification.PessoaSpecification;
 import jakarta.persistence.EntityNotFoundException;
@@ -35,11 +36,11 @@ public class PessoaService {
         repository.deleteById(id);
     }
 
-    public boolean existeCpfCnpj(String cpfCnpj) {
-        return repository.existsPessoaByCpfCnpj(cpfCnpj);
+    public boolean existeCpfCnpj(String cpfCnpj, TipoCadastro tipoCadastro) {
+        return repository.existsPessoaByCpfCnpjAndTipo(cpfCnpj, tipoCadastro);
     }
 
-    public boolean existeEmail(String email) {
-        return repository.existsPessoaByEmail(email);
+    public boolean existeEmail(String email, TipoCadastro tipo) {
+        return repository.existsPessoaByEmailAndTipo(email, tipo);
     }
 }

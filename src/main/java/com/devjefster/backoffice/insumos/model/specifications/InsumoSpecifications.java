@@ -14,7 +14,6 @@ public class InsumoSpecifications {
                         criteriaBuilder.like(criteriaBuilder.lower(root.get("descricao")), texto),
                         criteriaBuilder.like(criteriaBuilder.lower(root.get("aplicacao")), texto),
                         criteriaBuilder.like(criteriaBuilder.lower(root.get("material")), texto),
-                        criteriaBuilder.like(criteriaBuilder.lower(root.get("descricaoServico")), texto),
                         criteriaBuilder.like(criteriaBuilder.lower(root.get("especificacoesTecnicas")), texto)
                 );
             }

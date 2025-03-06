@@ -1,7 +1,13 @@
 package com.devjefster.backoffice.estoque.service;
 
 import com.devjefster.backoffice.estoque.controller.dto.MovimentacaoEstoqueDTO;
-import com.devjefster.backoffice.estoque.model.entidades.*;
+import com.devjefster.backoffice.estoque.model.entidades.Estoque;
+import com.devjefster.backoffice.estoque.model.entidades.GradeCadastrada;
+import com.devjefster.backoffice.estoque.model.entidades.LoteEstoque;
+import com.devjefster.backoffice.estoque.model.entidades.LoteInsumo;
+import com.devjefster.backoffice.estoque.model.entidades.LoteProdutoAcabado;
+import com.devjefster.backoffice.estoque.model.entidades.LoteProdutoFinal;
+import com.devjefster.backoffice.estoque.model.entidades.MovimentacaoEstoque;
 import com.devjefster.backoffice.estoque.model.enums.TipoMovimentacaoEstoque;
 import com.devjefster.backoffice.estoque.model.mapper.MovimentacaoEstoqueMapper;
 import com.devjefster.backoffice.estoque.model.repositories.LoteEstoqueRepository;
@@ -63,20 +69,26 @@ public class LoteEstoqueService {
     }
 
     @Transactional
-    public void buscarOuCriarEstoqueInsumo(Estoque estoque, Pessoa fabricante, BigDecimal quantidade, UnidadeMedida unidadeMedida, LocalDate validade, List<GradeCadastrada> grades, BigDecimal custoUnitario) {
+    public void buscarOuCriarEstoqueInsumo(Estoque estoque, Pessoa fabricante, BigDecimal quantidade, UnidadeMedida unidadeMedida, LocalDate validade, List<GradeCadastrada> grades, BigDecimal custoUnitario, LocalDate dataEntrada) {
         LoteInsumo lote = new LoteInsumo();
-        List<LoteInsumo> loteEstoques = estoque.getLotes().stream()
-                .filter(loteEstoque -> loteEstoque instanceof LoteInsumo)
-                .map(loteEstoque -> (LoteInsumo) loteEstoque)
-                .filter(loteInsumo -> loteInsumo.getFabricante().equals(fabricante) && loteInsumo.getValidade().equals(validade))
-                .toList();
-        if (loteEstoques.isEmpty()) {
-            lote = criarLote(estoque, fabricante, quantidade, unidadeMedida, validade, grades, custoUnitario);
+        if (estoque.getLotes() != null) {
+            List<LoteInsumo> loteEstoques = estoque.getLotes().stream()
+                    .filter(loteEstoque -> loteEstoque instanceof LoteInsumo)
+                    .map(loteEstoque -> (LoteInsumo) loteEstoque)
+                    .filter(loteInsumo -> loteInsumo.getFabricante().equals(fabricante) && loteInsumo.getValidade().equals(validade))
+                    .toList();
+            if (loteEstoques.isEmpty()) {
+                lote = criarLote(estoque, fabricante, quantidade, unidadeMedida, validade, grades, custoUnitario, dataEntrada);
+            } else {
+                lote = loteEstoques.getFirst();
+                lote.adicionarQuantidade(quantidade);
+                lote.setCustoUnitario((lote.getCustoUnitario().add(custoUnitario)).divide(lote.getQuantidade(), RoundingMode.HALF_EVEN));
+            }
         } else {
-            lote = loteEstoques.getFirst();
-            lote.adicionarQuantidade(quantidade);
-            lote.setCustoUnitario((lote.getCustoUnitario().add(custoUnitario)).divide(lote.getQuantidade(), RoundingMode.HALF_EVEN));
+            lote = criarLote(estoque, fabricante, quantidade, unidadeMedida, validade, grades, custoUnitario, dataEntrada);
         }
+
+
         registrarMovimentacao(lote, quantidade, TipoMovimentacaoEstoque.ENTRADA);
     }
 
@@ -99,9 +111,10 @@ public class LoteEstoqueService {
         loteEstoqueRepository.save(lote);
     }
 
-    private LoteInsumo criarLote(Estoque estoque, Pessoa fabricante, BigDecimal quantidade, UnidadeMedida unidadeMedida, LocalDate validade, List<GradeCadastrada> grades, BigDecimal custoUnitario) {
+    private LoteInsumo criarLote(Estoque estoque, Pessoa fabricante, BigDecimal quantidade, UnidadeMedida unidadeMedida, LocalDate validade, List<GradeCadastrada> grades, BigDecimal custoUnitario, LocalDate dataEntrada) {
         LoteInsumo lote = new LoteInsumo();
         lote.setEstoque(estoque);
+        lote.setDataEntrada(dataEntrada);
         lote.setFabricante(fabricante);
         lote.adicionarQuantidade(quantidade);
         lote.setUnidadeMedida(unidadeMedida);

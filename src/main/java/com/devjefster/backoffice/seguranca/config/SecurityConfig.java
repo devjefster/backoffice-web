@@ -14,7 +14,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 
 import java.util.Arrays;
-import java.util.Collections;
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -23,54 +23,28 @@ public class SecurityConfig {
 
     private final JwtRequestFilter jwtRequestFilter;
 
-    @Value("${security.cors.allowed-origins}")
-    private String[] allowedOrigins;
-
-    @Value("${security.cors.allowed-methods}")
-    private String[] allowedMethods;
-
-    @Value("${security.cors.allowed-headers}")
-    private String[] allowedHeaders;
-
-    @Value("${security.cors.exposed-headers}")
-    private String[] exposedHeaders;
-
-    @Value("${security.cors.allow-credentials}")
-    private boolean allowCredentials;
-
-    @Value("${security.cors.max-age}")
-    private long maxAge;
-
     @Value("${security.endpoints.public}")
     private String[] publicEndpoints;
 
-    @Value("${security.roles.admin-endpoints}")
-    private String[] adminEndpoints;
-
-    @Value("${security.roles.user-endpoints}")
-    private String[] userEndpoints;
 
     @Bean(name = "globalSecurityFilterChain")
     public SecurityFilterChain globalSecurityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
-                .cors(cors -> cors.configurationSource(request-> {
+                .cors(cors -> cors.configurationSource(request -> {
                     CorsConfiguration configuration = new CorsConfiguration();
-                    configuration.setAllowedOriginPatterns(Collections.singletonList("*"));
-                    configuration.setAllowedMethods(Arrays.asList(allowedMethods));
-                    configuration.setAllowedHeaders(Arrays.asList(allowedHeaders));
-                    configuration.setExposedHeaders(Arrays.asList(exposedHeaders));
-                    configuration.setAllowCredentials(allowCredentials);
-                    configuration.setMaxAge(maxAge);
+                    configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000", "http://localhost:8080", "http://192.168.1.13:3000", "http://192.168.1.14:3000", "http://192.168.1.11:3000"));
+                    configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+                    configuration.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));
+                    configuration.setExposedHeaders(List.of("Authorization"));
+                    configuration.setAllowCredentials(true);
                     return configuration;
                 }))
-                .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers(publicEndpoints).permitAll();
-                    auth.anyRequest().authenticated();
-                })
-                .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-
+                .authorizeHttpRequests(auth -> auth.anyRequest().permitAll()) // Allow all requests
+                .securityMatcher("/**") // Apply globally
+                .headers(AbstractHttpConfigurer::disable) // Disable security headers
+                .logout(AbstractHttpConfigurer::disable)
+                .sessionManagement(AbstractHttpConfigurer::disable);
         return http.build();
     }
 }

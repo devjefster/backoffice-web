@@ -10,7 +10,8 @@ public enum ItensConsumiveisEnum implements SubTipoInsumoEnum {
     VALVULA_SPRAY("Válvula spray"),
     ADESIVO("Adesivo industrial"),
     PAVIO_ALGODAO("Pavio de algodão"),
-    PAVIO_MADEIRA("Pavio de madeira");
+    PAVIO_MADEIRA("Pavio de madeira"),
+    GATILHO("Gatilho");
 
 
     private final String descricao;

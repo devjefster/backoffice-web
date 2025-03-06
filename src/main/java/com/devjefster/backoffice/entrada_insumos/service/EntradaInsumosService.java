@@ -8,6 +8,7 @@ import com.devjefster.backoffice.entrada_insumos.model.repositories.LoteEntradaR
 import com.devjefster.backoffice.entrada_insumos.model.specifications.EntradaInsumosSpecifications;
 import com.devjefster.backoffice.util.conversor.UnidadeMedidaConverter;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -28,33 +29,36 @@ public class EntradaInsumosService {
     private final LoteEntradaRepository loteEntradaRepoository;
     private final UnidadeMedidaConverter unidadeMedidaConverter;
 
+    @Transactional
     public EntradaInsumos criarEntrada(EntradaInsumos entrada) {
         log.info("Criando Entrada {}", entrada);
         validarEntrada(entrada);
         distribuirCustosAdicionais(entrada);
 
-        // Salva a entrada de insumos
-        entrada.getItens().forEach(item -> {
+        // Primeiro salva a entrada e seus itens SEM os lotes
+        entrada.getItens().forEach(item -> item.setEntradaInsumos(entrada));
+        EntradaInsumos saved = salvar(entrada);
+
+        // Agora, com os itens persistidos, cria os lotes corretamente
+        saved.getItens().forEach(item -> {
             BigDecimal quantidadeConvertida = unidadeMedidaConverter.converterParaPadrao(item.getUnidadeMedidaEntrada(), item.getQuantidade());
 
-            // Criar o lote de entrada
             LoteEntrada lote = new LoteEntrada();
             lote.setEntradaItem(item);
             lote.setUnidadeMedida(item.getUnidadeMedidaEntrada());
             lote.setQuantidadeConvertida(quantidadeConvertida);
             lote.setValidade(item.getValidade());
+
             loteEntradaRepoository.save(lote);
-            item.calcularCustoTotal();
         });
 
-        entrada.getItens().forEach(item -> item.setEntradaInsumos(entrada));
-        EntradaInsumos saved = salvar(entrada);
         log.info("Entrada criada com ID: {}", saved.getId());
-
         return saved;
     }
 
+
     private EntradaInsumos salvar(EntradaInsumos entrada) {
+        entrada.setId(null);
         entrada.calcularCusto();
         return repository.save(entrada);
     }

@@ -30,7 +30,7 @@ public class EntradaInsumosFacade {
     public EntradaInsumosDTO criarEntrada(EntradaInsumosDTO dto) {
         EntradaInsumos entrada = mapper.toEntity(dto);
         EntradaInsumos entradaInsumos = entradaService.criarEntrada(entrada);
-        buscarOuCriarEstoqueInsumo(entradaInsumos.getItens());
+        buscarOuCriarEstoqueInsumo(entradaInsumos.getItens(), entrada.getDataEntrada());
         return mapper.toDto(entradaInsumos);
     }
 
@@ -61,7 +61,7 @@ public class EntradaInsumosFacade {
 
         entradaService.atualizarEntrada(id, entradaExistente);
 
-        buscarOuCriarEstoqueInsumo(entradaExistente.getItens());
+        buscarOuCriarEstoqueInsumo(entradaExistente.getItens(), novaEntrada.getDataEntrada());
     }
 
 
@@ -83,9 +83,9 @@ public class EntradaInsumosFacade {
         });
     }
 
-    private void buscarOuCriarEstoqueInsumo(List<EntradaInsumoItem> entradaInsumos) {
+    private void buscarOuCriarEstoqueInsumo(List<EntradaInsumoItem> entradaInsumos, LocalDate dataEntrada) {
         entradaInsumos.forEach(entradaInsumoItem -> {
-            estoqueService.buscarOuCriarEstoqueInsumo(entradaInsumoItem.getInsumo(), entradaInsumoItem.getFabricante(), entradaInsumoItem.getQuantidade(), entradaInsumoItem.getUnidadeMedidaEntrada(), entradaInsumoItem.getValidade(), entradaInsumoItem.getGrades(), entradaInsumoItem.getPrecoUnitario());
+            estoqueService.buscarOuCriarEstoqueInsumo(entradaInsumoItem.getInsumo(), entradaInsumoItem.getFabricante(), entradaInsumoItem.getQuantidade(), entradaInsumoItem.getUnidadeMedidaEntrada(), entradaInsumoItem.getValidade(), entradaInsumoItem.getGrades(), entradaInsumoItem.getPrecoUnitario(), dataEntrada);
         });
 
     }

@@ -24,15 +24,20 @@ public class PessoaSpecification implements Specification<Pessoa> {
         List<Predicate> predicates = new ArrayList<>();
         criteriaBuilder.conjunction();
         if (filtros != null) {
-            predicates.add(criteriaBuilder.and(criteriaBuilder.equal(root.get("tipo"), filtros.tipo())));
             if (filtros.cpfCnpj() != null) {
                 predicates.add(criteriaBuilder.equal(root.get("cpfCnpj"), filtros.cpfCnpj()));
             }
-            if (filtros.nome() != null) {
-                criteriaBuilder.or(criteriaBuilder.like(root.get("nome"), "%" + filtros.nome() + "%"),
-                        criteriaBuilder.like(criteriaBuilder.lower(root.get("razaoSocial")), "%" + filtros.nome().toLowerCase() + "%"),
-                        criteriaBuilder.like(criteriaBuilder.lower(root.get("nomeFantasia")), "%" + filtros.nome().toLowerCase() + "%"));
+            if (filtros.nome() != null && !filtros.nome().trim().isEmpty()) {
+                predicates.add(criteriaBuilder.or(
+                        criteriaBuilder.like(criteriaBuilder.lower(root.get("nome")), "%" + filtros.nome().trim().toLowerCase() + "%"),
+                        criteriaBuilder.like(criteriaBuilder.lower(root.get("razaoSocial")), "%" + filtros.nome().trim().toLowerCase() + "%"),
+                        criteriaBuilder.like(criteriaBuilder.lower(root.get("nomeFantasia")), "%" + filtros.nome().trim().toLowerCase() + "%")
+                ));
             }
+            if (filtros.tipo() != null) {
+                predicates.add(criteriaBuilder.equal(root.get("tipo"), filtros.tipo())); // Ensure "tipo" is not null
+            }
+
             if (filtros.tipoPessoa() != null) {
                 criteriaBuilder.equal(root.get("tipoPessoa"), filtros.tipoPessoa());
 

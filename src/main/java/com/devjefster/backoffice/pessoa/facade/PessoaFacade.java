@@ -89,10 +89,10 @@ public class PessoaFacade {
 
     public Map<String, String> validarUnicidade(PessoaDTO pessoa) {
         Map<String, String> erros = new HashMap<>();
-        if (pessoaService.existeCpfCnpj(pessoa.getCpfCnpj())) {
+        if (pessoaService.existeCpfCnpj(pessoa.getCpfCnpj(), pessoa.getTipo())) {
             erros.put("cpfCnpj", "CPF/CNPJ já cadastrado.");
         }
-        if (pessoaService.existeEmail(pessoa.getEmail())) {
+        if (pessoaService.existeEmail(pessoa.getEmail(), pessoa.getTipo())) {
             erros.put("email", "E-mail já cadastrado.");
         }
 

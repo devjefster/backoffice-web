@@ -21,7 +21,7 @@ public class LoteProdutoFinal extends LoteEstoque {
 
     @ManyToOne
     private Produto produto;
-    @Column(nullable = false, updatable = false)
+    @Column(updatable = false)
     private LocalDate dataFabricacao;
 
 }

@@ -54,7 +54,7 @@ public class EntradaInsumoItem extends EntidadeBase {
     @Column(nullable = false)
     private BigDecimal precoUnitario; // Preço por unidade de entrada.
 
-    @Column(nullable = false)
+    @Column
     private LocalDate validade;
 
     @Column(nullable = false)
@@ -70,7 +70,4 @@ public class EntradaInsumoItem extends EntidadeBase {
             inverseJoinColumns = @JoinColumn(name = "grade_id"))
     private List<GradeCadastrada> grades;
 
-    public void calcularCustoTotal() {
-        this.custoTotal = precoUnitario.multiply(quantidade);
-    }
 }

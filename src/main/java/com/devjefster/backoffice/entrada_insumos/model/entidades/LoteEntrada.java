@@ -39,7 +39,7 @@ public class LoteEntrada extends EntidadeBase {
     @Column(nullable = false)
     private BigDecimal quantidadeConvertida; // Quantidade convertida para a unidade padrão.
 
-    @Column(nullable = false)
+    @Column
     private LocalDate validade;
 
     @ManyToMany
@@ -49,7 +49,4 @@ public class LoteEntrada extends EntidadeBase {
             inverseJoinColumns = @JoinColumn(name = "grade_id"))
     private List<GradeCadastrada> grades;
 
-    public boolean isValidoParaUso(LocalDate dataAtual) {
-        return validade == null || !validade.isBefore(dataAtual);
-    }
 }

@@ -85,13 +85,13 @@ public class EstoqueService {
     }
 
     @Transactional
-    public void buscarOuCriarEstoqueInsumo(Insumo insumo, Pessoa fabricante, BigDecimal quantidade, UnidadeMedida unidadeMedida, LocalDate validade, List<GradeCadastrada> grades, BigDecimal custoUnitario) {
+    public void buscarOuCriarEstoqueInsumo(Insumo insumo, Pessoa fabricante, BigDecimal quantidade, UnidadeMedida unidadeMedida, LocalDate validade, List<GradeCadastrada> grades, BigDecimal custoUnitario, LocalDate dataEntrada) {
         Optional<Estoque> optEstoque = estoqueRepository.findByInsumo_Id(insumo.getId());
         Estoque estoque = optEstoque.orElseGet(() -> {
             Estoque novoEstoque = criarEstoque(insumo, null, quantidade, unidadeMedida, validade, grades);
             return estoqueRepository.save(novoEstoque);
         });
-        loteEstoqueService.buscarOuCriarEstoqueInsumo(estoque, fabricante, quantidade, unidadeMedida, validade, grades, custoUnitario);
+        loteEstoqueService.buscarOuCriarEstoqueInsumo(estoque, fabricante, quantidade, unidadeMedida, validade, grades, custoUnitario, dataEntrada);
     }
 
     private Estoque criarEstoque(Insumo insumo, Produto produto, BigDecimal quantidade, UnidadeMedida unidadeMedida, LocalDate validade, List<GradeCadastrada> grades) {
